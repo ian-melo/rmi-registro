@@ -1,15 +1,15 @@
 public class Representante {
     //ATRIBUTOS
     /**
-     * 
+     * CPF do representante
      */
     private String cpf;
     /**
-     * 
+     * Nome do representante
      */
     private String nome;
     /**
-     * 
+     * Telefone do representante
      */
     private String telefone;
     

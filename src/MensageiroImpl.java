@@ -1,4 +1,6 @@
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class MensageiroImpl extends UnicastRemoteObject
@@ -11,27 +13,55 @@ implements MensageiroRegistro {
     //IMPLEMENTADOS
     @Override
     public boolean inserir(String[] item) throws RemoteException {
+        if(!verificarUsuario())
             return false;
+        //!
+        DAO dao = new PessoaJurDAO();
+        return dao.inserir(item);
     }
     @Override
     public boolean alterar(String[] item) throws RemoteException {
+        if(!verificarUsuario())
             return false;
+        //!
+        DAO dao = new PessoaJurDAO();
+        return dao.alterar(item);
     }
     @Override
     public boolean excluir(String[] item) throws RemoteException {
+        if(!verificarUsuario())
             return false;
+        //!
+        DAO dao = new PessoaJurDAO();
+        return dao.excluir(item);
     }
     @Override
-    public String[] procurar(String item) throws RemoteException {
+    public String[] procurar(String id) throws RemoteException {
+        if(!verificarUsuario())
             return null;
+        //!
+        String[] res = new String[25];
+        DAO dao = new PessoaJurDAO();
+        res[1] = dao.procurar(id).toString();
+        return res;
     }
     @Override
     public Object[][] listar() throws RemoteException {
+        if(!verificarUsuario())
             return null;
+        //!
+        String[][] res = new String[25][20];
+        DAO dao = new PessoaJurDAO();
+        res[0][1] = dao.listar().toString();
+        return res;
     }
     @Override
     public String[] procurarLimitado(String id) throws RemoteException {
-        return null;
+        //!
+        String[] res = new String[25];
+        DAO dao = new PessoaJurDAO();
+        res[1] = dao.procurar(id).toString();
+        return res;
     }
     
     //METODOS
@@ -40,6 +70,14 @@ implements MensageiroRegistro {
      * @return true, caso esteja<br/>false, caso contrário
      */
     private boolean verificarUsuario() {
+        try {
+            //MensageiroVerifica
+            LocateRegistry.getRegistry("127.0.0.1");
+            MensageiroVerifica menV = (MensageiroVerifica) Naming.lookup("rmi://localhost:14002/MensageiroVerifica");
+            return menV.isUsuarioLogado();
+        } catch (Exception ex) {
+            System.out.println("Erro na verificação: " + ex.getMessage());
             return false;
+        }
     }
 }

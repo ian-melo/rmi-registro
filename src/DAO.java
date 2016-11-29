@@ -1,31 +1,31 @@
-public interface DAO {
+public interface DAO<T> {
     /**
-     * 
-     * @param item
-     * @return 
+     * Insere um item no banco de dados
+     * @param item Item a ser inserido
+     * @return true, se inserido com sucesso<br/>false, caso contrário
      */
-    public abstract boolean inserir(Object item);
+    public abstract boolean inserir(T item);
     /**
-     * 
-     * @param item
-     * @return 
+     * Altera um item no banco de dados
+     * @param item Item a ser alterado
+     * @return true, se alterado com sucesso<br/>false, caso contrário
      */
-    public abstract boolean alterar(Object item);
+    public abstract boolean alterar(T item);
     /**
-     * 
-     * @param item
-     * @return 
+     * Exclui um item no banco de dados
+     * @param item Item a ser excluído
+     * @return true, se excluído com sucesso<br/>false, caso contrário
      */
-    public abstract boolean excluir(Object item);
+    public abstract boolean excluir(T item);
     /**
-     * 
-     * @param item
-     * @return 
+     * Busca por um item no banco de dados
+     * @param item Item a ser buscado, somente com o identificador
+     * @return Item, com todos os respectivos valores do resultado de busca
      */
-    public abstract Object procurar(Object item);
+    public abstract Object procurar(T item);
     /**
-     * 
-     * @return 
+     * Lista todos os itens de um tipo presentes no banco de dados
+     * @return Lista com todos os itens correspondentes
      */
-    public abstract Object[] listar();
+    public abstract java.util.List<T> listar();
 }

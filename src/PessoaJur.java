@@ -1,49 +1,57 @@
 public class PessoaJur {
     //ATRIBUTOS
     /**
-     * 
+     * CNPJ da empresa
      */
     private String cnpj;
     /**
-     * 
+     * Razão social da empresa
      */
     private String razaoSocial;
     /**
-     * 
+     * Nome fantasia da empresa
      */
     private String nomeFantasia;
     /**
-     * 
+     * Telefone da empresa
      */
     private String telefoneDd;
     /**
-     * 
+     * Insc. mun. da empresa
      */
     private String inscricaoMunicipal;
     /**
-     * 
+     * Insc. est. da empresa
      */
     private String inscricaoEstadual;
     /**
-     * 
+     * E-mail da empresa
      */
     private String email;
     /**
-     * 
+     * Data de constituição da empresa
      */
     private java.util.Date dataConstituicao;
     /**
-     * 
+     * Atividades da empresa
      */
     private String atividades;
     /**
-     * 
+     * Gênero de atividade da empresa
      */
     private String generoAtividade;
     /**
-     * 
+     * Espécie de atividade da empresa
      */
     private String especieAtividade;
+    /**
+     *  Endereço da empresa
+     */
+    private Endereco endereco;
+    /**
+     * Representante da empresa
+     */
+    private Representante representante;
     
     //GETTERS SETTERS
     /**
@@ -199,5 +207,33 @@ public class PessoaJur {
      */
     public void setEspecieAtividade(String especieAtividade) {
         this.especieAtividade = especieAtividade;
+    }
+    /**
+     * 
+     * @return 
+     */
+    public Endereco getEndereco() {
+        return endereco;
+    }
+    /**
+     * 
+     * @param endereco 
+     */
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    /**
+     * 
+     * @return 
+     */
+    public Representante getRepresentante() {
+        return representante;
+    }
+    /**
+     * 
+     * @param representante 
+     */
+    public void setRepresentante(Representante representante) {
+        this.representante = representante;
     }
 }

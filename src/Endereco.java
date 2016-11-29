@@ -1,35 +1,35 @@
 public class Endereco {
     //ATRIBUTOS
     /**
-     * 
+     * CEP do endereço
      */
     private String cep;
     /**
-     * 
+     * Número do endereço
      */
     private String numero;
     /**
-     * 
+     * Complemento do endereço
      */
     private String complemento;
     /**
-     * 
+     * Logradouro do endereço
      */
     private String logradouro;
     /**
-     * 
+     * Bairro do endereço
      */
     private String bairro;
     /**
-     * 
+     * Cidade do endereço
      */
     private String cidade;
     /**
-     * 
+     * Estado do endereço
      */
     private String estado;
     /**
-     * 
+     * País do endereço
      */
     private String pais;
     
