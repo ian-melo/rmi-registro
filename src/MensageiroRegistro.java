@@ -1,6 +1,33 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * Mensageiro de registro<br/><br/>
+ * O parâmetro item deve seguir a seguinte ordem
+ * Cnpj
+ * RazaoSocial
+ * NomeFantasia
+ * TelefoneDd
+ * InscricaoMunicipal
+ * InscricaoEstadual
+ * Email
+ * DataConstituicao (formato dd/mm/aaaa)
+ * Atividades
+ * setGeneroAtividade
+ * EspecieAtividade
+ * Cep
+ * Numero
+ * Complemento
+ * Logradouro
+ * Bairro
+ * Cidade
+ * Estado
+ * Pais
+ * Cpf
+ * Nome
+ * Telefone
+ * @author I.
+ */
 public interface MensageiroRegistro extends Remote {
     /**
      * Insere um item no banco de dados

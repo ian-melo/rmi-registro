@@ -70,9 +70,11 @@ public class PessoaJurDAO implements DAO<PessoaJur> {
                 if(rs.next()) {
                     codRe = rs.getInt("CodRepresentante");
                 }
-                //Fecha conexão
-                bd.fecharConexao();
+            //Se houver, busca o código
+            } else {
+                codRe = rs.getInt("CodRepresentante");
             }
+            //Fecha conexão
             bd.fecharConexao();
             //Pessoa Jurídica - Inserção
             //Define String

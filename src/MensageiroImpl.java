@@ -15,7 +15,37 @@ implements MensageiroRegistro {
     public boolean inserir(String[] item) throws RemoteException {
         if(!verificarUsuario())
             return false;
-        //!
+        //Pessoa Jurídica
+        PessoaJur pj = new PessoaJur();
+        pj.setCnpj("");
+        pj.setRazaoSocial("");
+        pj.setNomeFantasia("");
+        pj.setTelefoneDd("");
+        pj.setInscricaoMunicipal("");
+        pj.setInscricaoEstadual("");
+        pj.setEmail("");
+        pj.setDataConstituicao(new java.util.Date());
+        pj.setAtividades("");
+        pj.setGeneroAtividade("");
+        pj.setEspecieAtividade("");
+        //Endereço
+        Endereco en = new Endereco();
+        en.setCep("");
+        en.setNumero("");
+        en.setComplemento("");
+        en.setLogradouro("");
+        en.setBairro("");
+        en.setCidade("");
+        en.setEstado("");
+        en.setPais("");
+        pj.setEndereco(en);
+        //Representante
+        Representante re = new Representante();
+        re.setCpf("");
+        re.setNome("");
+        re.setTelefone("");
+        pj.setRepresentante(re);
+        
         DAO dao = new PessoaJurDAO();
         return dao.inserir(item);
     }
