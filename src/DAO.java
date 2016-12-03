@@ -22,7 +22,7 @@ public interface DAO<T> {
      * @param item Item a ser buscado, somente com o identificador
      * @return Item, com todos os respectivos valores do resultado de busca
      */
-    public abstract Object procurar(T item);
+    public abstract T procurar(T item);
     /**
      * Lista todos os itens de um tipo presentes no banco de dados
      * @return Lista com todos os itens correspondentes
