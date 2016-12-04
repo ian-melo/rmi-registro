@@ -15,8 +15,8 @@ implements MensageiroRegistro {
     
     //IMPLEMENTADOS
     @Override
-    public boolean inserir(String[] item) throws RemoteException {
-        if(!verificarUsuario())
+    public boolean inserir(String[] item, String usuario, String senha) throws RemoteException {
+        if(!verificarUsuario(usuario,senha))
             return false;
         //Verifica se a data está no formato correto
         if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
@@ -60,8 +60,8 @@ implements MensageiroRegistro {
         return dao.inserir(pj);
     }
     @Override
-    public boolean alterar(String[] item) throws RemoteException {
-        if(!verificarUsuario())
+    public boolean alterar(String[] item, String usuario, String senha) throws RemoteException {
+        if(!verificarUsuario(usuario,senha))
             return false;
         //Verifica se a data está no formato correto
         if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
@@ -105,8 +105,8 @@ implements MensageiroRegistro {
         return dao.alterar(pj);
     }
     @Override
-    public boolean excluir(String[] item) throws RemoteException {
-        if(!verificarUsuario())
+    public boolean excluir(String[] item, String usuario, String senha) throws RemoteException {
+        if(!verificarUsuario(usuario,senha))
             return false;
         //Verifica se a data está no formato correto
         if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
@@ -150,8 +150,8 @@ implements MensageiroRegistro {
         return dao.excluir(pj);
     }
     @Override
-    public String[] procurar(String id) throws RemoteException {
-        if(!verificarUsuario())
+    public String[] procurar(String id, String usuario, String senha) throws RemoteException {
+        if(!verificarUsuario(usuario,senha))
             return null;
         
         PessoaJur pj;
@@ -199,8 +199,8 @@ implements MensageiroRegistro {
         return res;
     }
     @Override
-    public Object[][] listar() throws RemoteException {
-        if(!verificarUsuario())
+    public Object[][] listar(String usuario, String senha) throws RemoteException {
+        if(!verificarUsuario(usuario,senha))
             return null;
         
         PessoaJur pj;
@@ -287,11 +287,16 @@ implements MensageiroRegistro {
      * Verifica se usuário administrador está logado
      * @return true, caso esteja<br/>false, caso contrário
      */
-    private boolean verificarUsuario() {
+    private boolean verificarUsuario(String usuario, String senha) {
         try {
             //MensageiroVerifica
             LocateRegistry.getRegistry("127.0.0.1");
             MensageiroVerifica menV = (MensageiroVerifica) Naming.lookup("rmi://localhost:14002/MensageiroVerifica");
+            //MensageiroVerifica
+            LocateRegistry.getRegistry("127.0.0.1");
+            MensageiroAcesso menA = (MensageiroAcesso) Naming.lookup("rmi://localhost:14001/MensageiroAcesso");
+            
+            menA.entrar(usuario, senha);
             return menV.isUsuarioLogado();
         } catch (Exception ex) {
             System.out.println("Erro na verificação: " + ex.getMessage());

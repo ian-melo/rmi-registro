@@ -51,37 +51,47 @@ public interface MensageiroRegistro extends Remote {
     /**
      * Insere um item no banco de dados
      * @param item Item a ser inserido
+     * @param usuario Conta de usuário administrador
+     * @param senha Senha de usuário administrador
      * @return true, se sucesso<br/>false, se insucesso
      * @throws java.rmi.RemoteException
      */
-    public abstract boolean inserir(String[] item) throws RemoteException;
+    public abstract boolean inserir(String[] item, String usuario, String senha) throws RemoteException;
     /**
      * Altera um item no banco de dados
      * @param item Item a ser alterado
+     * @param usuario Conta de usuário administrador
+     * @param senha Senha de usuário administrador
      * @return true, se sucesso<br/>false, se insucesso
      * @throws java.rmi.RemoteException
      */
-    public abstract boolean alterar(String[] item) throws RemoteException;
+    public abstract boolean alterar(String[] item, String usuario, String senha) throws RemoteException;
     /**
      * Exclui um item no banco de dados
      * @param item Item a ser excluído
+     * @param usuario Conta de usuário administrador
+     * @param senha Senha de usuário administrador
      * @return true, se sucesso<br/>false, se insucesso
      * @throws java.rmi.RemoteException
      */
-    public abstract boolean excluir(String[] item) throws RemoteException;
+    public abstract boolean excluir(String[] item, String usuario, String senha) throws RemoteException;
     /**
      * Procura um item no banco de dados
      * @param id Identificador do item a ser procurado
+     * @param usuario Conta de usuário administrador
+     * @param senha Senha de usuário administrador
      * @return vetor com os valores da busca
      * @throws java.rmi.RemoteException
      */
-    public abstract String[] procurar(String id) throws RemoteException;
+    public abstract String[] procurar(String id, String usuario, String senha) throws RemoteException;
     /**
      * Lista todos os itens do banco de dados
      * @return matriz com a relação de resultados
+     * @param usuario Conta de usuário administrador
+     * @param senha Senha de usuário administrador
      * @throws java.rmi.RemoteException
      */
-    public abstract Object[][] listar() throws RemoteException;
+    public abstract Object[][] listar(String usuario, String senha) throws RemoteException;
     /**
      * Procura um item no banco de dados (com informações limitadas)
      * @param id Identificador do item a ser procurado

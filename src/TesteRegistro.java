@@ -57,7 +57,7 @@ public class TesteRegistro {
         else
             System.out.println("Não deu.");
     }
-
+    /*
     public static void testeBuscar() throws RemoteException {
         MensageiroImpl mensa = new MensageiroImpl();
         String[] res;
@@ -182,5 +182,5 @@ public class TesteRegistro {
         param[20] = "nome rep";
         param[21] = "(11)99999-8888";
         System.out.println(mR.excluir(param));
-    }
+    }*/
 }
