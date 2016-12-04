@@ -140,7 +140,7 @@ public class PessoaJurDAO implements DAO<PessoaJur> {
             sql = "UPDATE PessoaJur SET RazaoSocial='"+item.getRazaoSocial()+"', NomeFantasia='"+item.getNomeFantasia()+"',"
                 + " TelefoneDd='"+item.getTelefoneDd()+"', InscriMunicipal='"+item.getInscricaoMunicipal()+"',"
                 + " InscriEstadual='"+item.getInscricaoEstadual()+"', Email='"+item.getEmail()+"',"
-                + " DataConstituicao='"+item.getDataConstituicao()+"', Atividades='"+item.getAtividades()+"', GeneroAtividade='"+item.getGeneroAtividade()+"',"
+                + " DataConstituicao='"+new java.sql.Date(item.getDataConstituicao().getTime())+"', Atividades='"+item.getAtividades()+"', GeneroAtividade='"+item.getGeneroAtividade()+"',"
                 + " EspecieAtividade='"+item.getEspecieAtividade()+"', Cep='"+en.getCep()+"',"
                 + " Numero='"+en.getNumero()+"', Complemento='"+en.getComplemento()+"', Logradouro='"+en.getLogradouro()+"', Bairro='"+en.getBairro()+"', Cidade='"+en.getCidade()+"',"
                 + " Estado='"+en.getEstado()+"', Pais='"+en.getPais()+"'"
@@ -219,7 +219,8 @@ public class PessoaJurDAO implements DAO<PessoaJur> {
         Endereco en;
         int codRe;
         //Obtém item
-        pj = item;
+        pj = new PessoaJur();
+        pj.setCnpj(item.getCnpj());
         //Realiza busca
         try {
             //Define String
@@ -293,6 +294,9 @@ public class PessoaJurDAO implements DAO<PessoaJur> {
         BancoDados bd = new BancoDados();
         PreparedStatement ps;
         ResultSet rs;
+        BancoDados bd2 = new BancoDados();
+        PreparedStatement ps2;
+        ResultSet rs2;
         String sql;
         //Negócio
         List<PessoaJur> li = new ArrayList<>();
@@ -339,20 +343,21 @@ public class PessoaJurDAO implements DAO<PessoaJur> {
                 codRe = rs.getInt("CodRepresentante");
                 //Define String
                 sql = "SELECT * FROM Representante WHERE CodRepresentante=? AND XDEAD=FALSE";
-                //Fecha, abre banco e prepara gatilho
-                bd.fecharConexao();
-                ps = bd.abrirConexao().prepareStatement(sql);
+                //Abre banco2 e prepara gatilho
+                ps2 = bd2.abrirConexao().prepareStatement(sql);
                 //Atribui os dados
-                ps.setInt(1, codRe);
+                ps2.setInt(1, codRe);
                 //Executa e puxa a busca
-                rs = ps.executeQuery();
+                rs2 = ps2.executeQuery();
                 //Verifica se houve resultados e atribui valores ao objeto
                 re = new Representante();
-                if(rs.next()){
-                    re.setCpf(rs.getString("Cpf"));
-                    re.setNome(rs.getString("Nome"));
-                    re.setTelefone(rs.getString("Telefone"));
+                if(rs2.next()){
+                    re.setCpf(rs2.getString("Cpf"));
+                    re.setNome(rs2.getString("Nome"));
+                    re.setTelefone(rs2.getString("Telefone"));
                 }
+                //Fecha banco2
+                bd2.fecharConexao();
                 pj.setRepresentante(re);
                 li.add(pj);
             }

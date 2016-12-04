@@ -1,5 +1,7 @@
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,81 +9,178 @@ public class TesteRegistro {
 
     public static void main(String[] args) {
         try {
-
-            testeInserir();//necessario estar logado ou desabilitar estar logado
-            testeLista();
-
+            //MensageiroVerifica
+            LocateRegistry.getRegistry("127.0.0.1");
+            MensageiroVerifica menV = (MensageiroVerifica) Naming.lookup("rmi://localhost:14002/MensageiroVerifica");
+            //MensageiroVerifica
+            //LocateRegistry.getRegistry("127.0.0.1");
+            //MensageiroAcesso menA = (MensageiroAcesso) Naming.lookup("rmi://localhost:14001/MensageiroAcesso");
+            /*
+            if(menA.entrar("admin", "123")) {
+                System.out.println("Login efetuado com sucesso!!!");
+            } else {
+                System.out.println("Problema no login");
+                return;
+            }
+            */
+            if(menV.isUsuarioLogado()) {
+                System.out.println("Sucesso na verificação!!!");
+            } else {
+                System.out.println("Problema na verificação");
+                return;
+            }
+            //System.out.println(menV.isUsuarioLogado());
+            
+            //testeBuscarLim(); //OK
+            //testeBuscar();//OK
+            //testeInserir();//OK
+            //testeLista();//OK
+            //testeAlterar();//OK
+            //testeExcluir();//OK
+            System.exit(0);
         } catch (RemoteException ex) {
             Logger.getLogger(TesteRegistro.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
         } catch (Exception ex) {
             Logger.getLogger(TesteRegistro.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
         }
+    }
+    
+    public static void testeBuscarLim() throws RemoteException {
+        MensageiroImpl mensa = new MensageiroImpl();
+        String[] res;
+        if((res = mensa.procurarLimitado("34.041.258/0001-58")) != null)
+            System.out.println(res[0] + "\n" + res[1] + "\n" + res[2] + "\n" +
+                    res[3] + "\n" + res[4] + "\n" + res[5] + "\n" + res[6] + "\n" +
+                    res[7] + "\n" + res[8] + "\n" + res[9] + "\n" + res[10]);
+        else
+            System.out.println("Não deu.");
+    }
+
+    public static void testeBuscar() throws RemoteException {
+        MensageiroImpl mensa = new MensageiroImpl();
+        String[] res;
+        if((res = mensa.procurar("34.041.258/0001-58")) != null)
+            System.out.println(res[0] + "\n" + res[1] + "\n" + res[2] + "\n" +
+                    res[3] + "\n" + res[4] + "\n" + res[5] + "\n" + res[6] + "\n" +
+                    res[7] + "\n" + res[8] + "\n" + res[9] + "\n" + res[10] +
+                    res[18] + "\n" + res[19] + "\n" + res[20] + "\n" + res[21]);
+        else
+            System.out.println("Não deu.");
     }
 
     public static void testeLista() throws RemoteException {
         MensageiroImpl mR = new MensageiroImpl();
-
-        Object[][] retorno = new Object[25][20];
-        retorno = mR.listar();
-
+        Object[][] retorno = mR.listar();
+        if(retorno != null) {
+            System.out.println(retorno.length);
+            for(int i = 0; i < retorno.length; i++) {
+                Object[] res = retorno[i];
+                System.out.println("-------PessoaJur-------");
+                System.out.println(res[0] + "\n" + res[1] + "\n" + res[2] + "\n" +
+                        res[3] + "\n" + res[4] + "\n" + res[5] + "\n" + res[6] + "\n" +
+                        res[7] + "\n" + res[8] + "\n" + res[9] + "\n" + res[10] + "\n" +
+                        res[18] + "\n" + res[19] + "\n" + res[20] + "\n" + res[21]);
+            }
+        } else {
+            System.out.println("Sem resultados ou problema.");
+        }
     }
 
     public static void testeInserir() throws RemoteException {
         //CNPJ validos: 68.355.404/0001-31; 51.728.712/0001-62
         //CPF: 514.928.977-95; 431.316.038-87
-
+        
         MensageiroImpl mR = new MensageiroImpl();
-        String[] retorno = new String[25];
-
-        retorno[1] = "51.728.712/0001-62";
-        retorno[2] = "razaoSocial";
-        retorno[3] = "NomeF";
-        retorno[4] = "9999-9999";
-        retorno[5] = "munucipal";
-        retorno[6] = "estadual";
-        retorno[7] = "email@gmail.com";
-        retorno[8] = "12/01/2016";
-        retorno[9] = "Atividades";
-        retorno[10] = "generoAtivi";
-        retorno[11] = "especialAtividade";
-        retorno[12] = "14545-010";
-        retorno[13] = "20";
-        retorno[14] = "complemento";
-        retorno[15] = "logrado";
-        retorno[16] = "baisso";
-        retorno[17] = "cidade";
-        retorno[18] = "es";
-        retorno[19] = "bra";
-        retorno[20] = "431.316.038-87";
-        retorno[21] = "nome rep";
-        retorno[22] = "9999-8888";
-
-        /*
-         retorno[0] = "51.728.712/0001-62";
-         retorno[1] = "razaoSocial";
-         retorno[2] = "NomeF";
-         retorno[3] = "9999-9999";
-         retorno[4] = "munucipal";
-         retorno[5] = "estadual";
-         retorno[6] = "email@gmail.com";
-         retorno[7] = "12/01/2016";
-         retorno[8] = "Atividades";
-         retorno[9] = "generoAtivi";
-         retorno[10] = "especialAtividade";
-         retorno[11] = "14545-010";
-         retorno[12] = "20";
-         retorno[13] = "complemento";
-         retorno[14] = "logrado";
-         retorno[15] = "baisso";
-         retorno[16] = "cidade";
-         retorno[17] = "es";
-         retorno[18] = "bra";
-         retorno[19] = "431.316.038-87";
-         retorno[20] = "nome rep";
-         retorno[21] = "9999-8888";
-         */
-        System.out.println(mR.inserir(retorno));
-
-
+        String[] param = new String[22];
+        
+        param[0] = "12.098.567/0981-62";
+        param[1] = "razaoSocial";
+        param[2] = "NomeF";
+        param[3] = "(11)9999-9999";
+        param[4] = "munucipal";
+        param[5] = "estadual";
+        param[6] = "email@gmail.com";
+        param[7] = "12/01/2016";
+        param[8] = "Atividades";
+        param[9] = "generoAtivi";
+        param[10] = "especialAtividade";
+        param[11] = "13545-010";
+        param[12] = "20";
+        param[13] = "complemento";
+        param[14] = "logrado";
+        param[15] = "bairro";
+        param[16] = "cidade";
+        param[17] = "sp";
+        param[18] = "brasil";
+        param[19] = "433.316.038-87";
+        param[20] = "nome rep";
+        param[21] = "(11)99999-8888";
+        System.out.println(mR.inserir(param));
+    }
+    
+    public static void testeAlterar() throws RemoteException {
+        //CNPJ validos: 68.355.404/0001-31; 51.728.712/0001-62
+        //CPF: 514.928.977-95; 431.316.038-87
+        
+        MensageiroImpl mR = new MensageiroImpl();
+        String[] param = new String[22];
+        
+        param[0] = "51.728.712/0001-62";
+        param[1] = "RMPS LTDA.";
+        param[2] = "Ritmo & Cia.";
+        param[3] = "(11)9999-9999";
+        param[4] = "3900";
+        param[5] = "48QWS";
+        param[6] = "email@gmail.com";
+        param[7] = "21/01/2015";
+        param[8] = "Atividades";
+        param[9] = "generoAtivi";
+        param[10] = "especialAtividade";
+        param[11] = "14545-010";
+        param[12] = "20";
+        param[13] = "complemento";
+        param[14] = "logrado";
+        param[15] = "bairro";
+        param[16] = "cidade";
+        param[17] = "sp";
+        param[18] = "brasil";
+        param[19] = "431.316.038-87";
+        param[20] = "nome rep";
+        param[21] = "(11)99999-8888";
+        System.out.println(mR.alterar(param));
+    }
+    
+    public static void testeExcluir() throws RemoteException {
+        //CNPJ validos: 68.355.404/0001-31; 51.728.712/0001-62
+        //CPF: 514.928.977-95; 431.316.038-87
+        
+        MensageiroImpl mR = new MensageiroImpl();
+        String[] param = new String[22];
+        
+        param[0] = "12.098.567/0981-62";
+        param[1] = "razaoSocial";
+        param[2] = "NomeF";
+        param[3] = "(11)9999-9999";
+        param[4] = "munucipal";
+        param[5] = "estadual";
+        param[6] = "email@gmail.com";
+        param[7] = "12/01/2016";
+        param[8] = "Atividades";
+        param[9] = "generoAtivi";
+        param[10] = "especialAtividade";
+        param[11] = "13545-010";
+        param[12] = "20";
+        param[13] = "complemento";
+        param[14] = "logrado";
+        param[15] = "bairro";
+        param[16] = "cidade";
+        param[17] = "sp";
+        param[18] = "brasil";
+        param[19] = "433.316.038-87";
+        param[20] = "nome rep";
+        param[21] = "(11)99999-8888";
+        System.out.println(mR.excluir(param));
     }
 }

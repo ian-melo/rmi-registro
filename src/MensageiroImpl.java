@@ -19,7 +19,7 @@ implements MensageiroRegistro {
         if(!verificarUsuario())
             return false;
         //Verifica se a data está no formato correto
-        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[8]))
+        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
             return false;
         //Configurações de data
         String[] dataArr = item[7].split("/");
@@ -64,7 +64,7 @@ implements MensageiroRegistro {
         if(!verificarUsuario())
             return false;
         //Verifica se a data está no formato correto
-        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[8]))
+        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
             return false;
         //Configurações de data
         String[] dataArr = item[7].split("/");
@@ -109,7 +109,7 @@ implements MensageiroRegistro {
         if(!verificarUsuario())
             return false;
         //Verifica se a data está no formato correto
-        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[8]))
+        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
             return false;
         //Configurações de data
         String[] dataArr = item[7].split("/");
