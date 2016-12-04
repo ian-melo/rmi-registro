@@ -17,6 +17,6 @@ public class ServerRegistro {
             System.out.println("Erro: " + ex);
             System.exit(1);
         }
-        System.out.print("Servidor de registro ativo...");
+        System.out.println("Servidor de registro ativo...");
     }
 }
