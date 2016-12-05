@@ -4,25 +4,32 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class TesteRegistro {
 
     public static void main(String[] args) {
-        try {
+        if (!Pattern.matches("(\\d{1,2})/(\\d{1,2})/(\\d{4})", "1/1/2019")) {
+            System.out.println("Inválido");
+        } else {
+            System.out.println("Válido");
+        }
+        
+        /*try {
             //MensageiroVerifica
-            LocateRegistry.getRegistry("127.0.0.1");
-            MensageiroVerifica menV = (MensageiroVerifica) Naming.lookup("rmi://localhost:14002/MensageiroVerifica");
+            //LocateRegistry.getRegistry("127.0.0.1");
+            //MensageiroVerifica menV = (MensageiroVerifica) Naming.lookup("rmi://localhost:14002/MensageiroVerifica");
             //MensageiroVerifica
             //LocateRegistry.getRegistry("127.0.0.1");
             //MensageiroAcesso menA = (MensageiroAcesso) Naming.lookup("rmi://localhost:14001/MensageiroAcesso");
-            /*
+            
             if(menA.entrar("admin", "123")) {
                 System.out.println("Login efetuado com sucesso!!!");
             } else {
                 System.out.println("Problema no login");
                 return;
             }
-            */
+            
             //if(menV.isUsuarioLogado()) {
             //    System.out.println("Sucesso na verificação!!!");
             //} else {
@@ -33,18 +40,18 @@ public class TesteRegistro {
             
             //testeBuscarLim(); //OK
             //testeBuscar();//OK
-            testeInserir();//OK
+            //testeInserir();//OK
             //testeLista();//OK
             //testeAlterar();//OK
             //testeExcluir();//OK
-            System.exit(0);
+            //System.exit(0);
         } catch (RemoteException ex) {
             Logger.getLogger(TesteRegistro.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         } catch (Exception ex) {
             Logger.getLogger(TesteRegistro.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
-        }
+        }*/
     }
     
     public static void testeBuscarLim() throws RemoteException {
