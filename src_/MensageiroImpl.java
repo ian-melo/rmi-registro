@@ -1,4 +1,3 @@
-
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -8,27 +7,24 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class MensageiroImpl extends UnicastRemoteObject
-        implements MensageiroRegistro {
-
+implements MensageiroRegistro {
     //CONSTRUTOR
-
     public MensageiroImpl() throws RemoteException {
         super();
     }
-
+    
     //IMPLEMENTADOS
     @Override
     public boolean inserir(String[] item, String usuario, String senha) throws RemoteException {
-        if (!verificarUsuario(usuario, senha)) {
+        if(!verificarUsuario(usuario,senha))
             return false;
-        }
         //Verifica se a data está no formato correto
-        if (!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7])) {
+        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
             return false;
-        }
         //Configurações de data
         String[] dataArr = item[7].split("/");
-        Date data = new Date((Integer.parseInt(dataArr[2]) - 1900), (Integer.parseInt(dataArr[1]) - 1), Integer.parseInt(dataArr[0]));
+        Date data = new Date((Integer.parseInt(dataArr[2])-1900),(Integer.parseInt(dataArr[1])-1),Integer.parseInt(dataArr[0]));
+        
         //Pessoa Jurídica
         PessoaJur pj = new PessoaJur();
         pj.setCnpj(item[0]);
@@ -59,24 +55,21 @@ public class MensageiroImpl extends UnicastRemoteObject
         re.setNome(item[20]);
         re.setTelefone(item[21]);
         pj.setRepresentante(re);
-
+        
         DAO dao = new PessoaJurDAO();
         return dao.inserir(pj);
     }
-
     @Override
     public boolean alterar(String[] item, String usuario, String senha) throws RemoteException {
-        if (!verificarUsuario(usuario, senha)) {
+        if(!verificarUsuario(usuario,senha))
             return false;
-        }
         //Verifica se a data está no formato correto
-        if (!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7])) {
+        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
             return false;
-        }
         //Configurações de data
         String[] dataArr = item[7].split("/");
-        Date data = new Date((Integer.parseInt(dataArr[2]) - 1900), (Integer.parseInt(dataArr[1]) - 1), Integer.parseInt(dataArr[0]));
-
+        Date data = new Date((Integer.parseInt(dataArr[2])-1900),(Integer.parseInt(dataArr[1])-1),Integer.parseInt(dataArr[0]));
+        
         //Pessoa Jurídica
         PessoaJur pj = new PessoaJur();
         pj.setCnpj(item[0]);
@@ -107,24 +100,21 @@ public class MensageiroImpl extends UnicastRemoteObject
         re.setNome(item[20]);
         re.setTelefone(item[21]);
         pj.setRepresentante(re);
-
+        
         DAO dao = new PessoaJurDAO();
         return dao.alterar(pj);
     }
-
     @Override
     public boolean excluir(String[] item, String usuario, String senha) throws RemoteException {
-        if (!verificarUsuario(usuario, senha)) {
+        if(!verificarUsuario(usuario,senha))
             return false;
-        }
         //Verifica se a data está no formato correto
-        if (!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7])) {
+        if(!Pattern.matches("(\\d{2})/(\\d{2})/(\\d{4})", item[7]))
             return false;
-        }
         //Configurações de data
         String[] dataArr = item[7].split("/");
-        Date data = new Date((Integer.parseInt(dataArr[2]) - 1900), (Integer.parseInt(dataArr[1]) - 1), Integer.parseInt(dataArr[0]));
-
+        Date data = new Date((Integer.parseInt(dataArr[2])-1900),(Integer.parseInt(dataArr[1])-1),Integer.parseInt(dataArr[0]));
+        
         //Pessoa Jurídica
         PessoaJur pj = new PessoaJur();
         pj.setCnpj(item[0]);
@@ -155,33 +145,30 @@ public class MensageiroImpl extends UnicastRemoteObject
         re.setNome(item[20]);
         re.setTelefone(item[21]);
         pj.setRepresentante(re);
-
+        
         DAO dao = new PessoaJurDAO();
         return dao.excluir(pj);
     }
-
     @Override
     public String[] procurar(String id, String usuario, String senha) throws RemoteException {
-        if (!verificarUsuario(usuario, senha)) {
+        if(!verificarUsuario(usuario,senha))
             return null;
-        }
-
+        
         PessoaJur pj;
         Endereco en;
         Representante re;
         String[] res = new String[22];
-
+        
         pj = new PessoaJur();
         pj.setCnpj(id);
         PessoaJurDAO dao = new PessoaJurDAO();
         pj = dao.procurar(pj);
         //Retorna null, caso não tenha encontrado
-        if (pj == null) {
+        if(pj == null)
             return null;
-        }
         //Configurações de data
         Date data = pj.getDataConstituicao();
-        String dataStr = data.getDate() + "/" + (data.getMonth() + 1) + "/" + (data.getYear() + 1900);
+        String dataStr = data.getDate() + "/" + (data.getMonth()+1) + "/" + (data.getYear()+1900);
         //Pessoa Jurídica
         res[0] = pj.getCnpj();
         res[1] = pj.getRazaoSocial();
@@ -211,12 +198,11 @@ public class MensageiroImpl extends UnicastRemoteObject
         res[21] = re.getTelefone();
         return res;
     }
-
     @Override
     public Object[][] listar(String usuario, String senha) throws RemoteException {
-        //if(!verificarUsuario(usuario,senha))
-        //    return null;
-
+        if(!verificarUsuario(usuario,senha))
+            return null;
+        
         PessoaJur pj;
         Endereco en;
         Representante re;
@@ -224,21 +210,18 @@ public class MensageiroImpl extends UnicastRemoteObject
         PessoaJurDAO dao = new PessoaJurDAO();
         li = dao.listar();
         //Retorna null, caso houve problema ou estiver vazia
-        if (li == null) {
+        if(li == null)
             return null;
-        }
-        if (li.isEmpty()) {
+        if(li.isEmpty())
             return null;
-        }
         //Criação da matriz
         Object[][] liRes = new String[li.size()][22];
-        for (int i = 0; i < li.size(); i++) {
-            pj = li.get(i);
+        for(int i = 0; i < li.size(); i++) {
+            pj = li.get(0);
             //Configurações de data
             Date data = pj.getDataConstituicao();
-            String dataStr = data.getDate() + "/" + (data.getMonth() + 1) + "/" + (data.getYear() + 1900);
+            String dataStr = data.getDate() + "/" + (data.getMonth()+1) + "/" + (data.getYear()+1900);
             //Pessoa Jurídica
-            
             liRes[i][0] = pj.getCnpj();
             liRes[i][1] = pj.getRazaoSocial();
             liRes[i][2] = pj.getNomeFantasia();
@@ -268,22 +251,20 @@ public class MensageiroImpl extends UnicastRemoteObject
         }
         return liRes;
     }
-
     @Override
     public String[] procurarLimitado(String id) throws RemoteException {
         PessoaJur pj;
         Endereco en;
         Representante re;
         String[] res = new String[11];
-
+        
         pj = new PessoaJur();
         pj.setCnpj(id);
         PessoaJurDAO dao = new PessoaJurDAO();
         pj = dao.procurar(pj);
         //Retorna null, caso não tenha encontrado
-        if (pj == null) {
+        if(pj == null)
             return null;
-        }
         //Pessoa Jurídica
         res[0] = pj.getAtividades();
         res[1] = pj.getGeneroAtividade();
@@ -300,24 +281,21 @@ public class MensageiroImpl extends UnicastRemoteObject
         res[10] = en.getPais();
         return res;
     }
-
+    
     //METODOS
     /**
      * Verifica se usuário administrador está logado
-     *
      * @return true, caso esteja<br/>false, caso contrário
      */
     private boolean verificarUsuario(String usuario, String senha) {
         try {
             //MensageiroVerifica
-            //LocateRegistry.getRegistry("127.0.0.1");
-            LocateRegistry.getRegistry("192.168.0.103");
+            LocateRegistry.getRegistry("127.0.0.1");
             MensageiroVerifica menV = (MensageiroVerifica) Naming.lookup("rmi://localhost:14002/MensageiroVerifica");
             //MensageiroVerifica
-            //LocateRegistry.getRegistry("127.0.0.1");
-            LocateRegistry.getRegistry("192.168.0.103");
+            LocateRegistry.getRegistry("127.0.0.1");
             MensageiroAcesso menA = (MensageiroAcesso) Naming.lookup("rmi://localhost:14001/MensageiroAcesso");
-
+            
             menA.entrar(usuario, senha);
             return menV.isUsuarioLogado();
         } catch (Exception ex) {

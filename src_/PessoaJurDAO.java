@@ -9,19 +9,13 @@ public class PessoaJurDAO implements DAO<PessoaJur> {
     //IMPLEMENTADOS
     @Override
     public boolean inserir(PessoaJur item) {
-        System.out.println("p2-1");
         //Valida os dados ao inserir
         if( !(validarCep(item.getEndereco().getCep()) && validarCpf(item.getRepresentante().getCpf())
             && validarCnpj(item.getCnpj())) )
             return false;
-        
-        
-        System.out.println("p2-2");
         //Para, se o item já existir
         if(procurar(item) != null)
             return false;
-        
-        System.out.println("p2-3");
         //Processo normal
         //Persist.
         BancoDados bd = new BancoDados();
@@ -114,10 +108,8 @@ public class PessoaJurDAO implements DAO<PessoaJur> {
             //Fecha conexão
             bd.fecharConexao();
         } catch(SQLException ex) {
-            System.out.println(ex);
             return false;
         } catch(ConexaoException ex) {
-            System.out.println(ex);
             return false;
         }
         return true;

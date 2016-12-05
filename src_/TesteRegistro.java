@@ -23,17 +23,17 @@ public class TesteRegistro {
                 return;
             }
             */
-            //if(menV.isUsuarioLogado()) {
-            //    System.out.println("Sucesso na verificação!!!");
-            //} else {
-            //    System.out.println("Problema na verificação");
-            //    return;
-            //}
+            if(menV.isUsuarioLogado()) {
+                System.out.println("Sucesso na verificação!!!");
+            } else {
+                System.out.println("Problema na verificação");
+                return;
+            }
             //System.out.println(menV.isUsuarioLogado());
             
             //testeBuscarLim(); //OK
             //testeBuscar();//OK
-            testeInserir();//OK
+            //testeInserir();//OK
             //testeLista();//OK
             //testeAlterar();//OK
             //testeExcluir();//OK
@@ -87,7 +87,7 @@ public class TesteRegistro {
             System.out.println("Sem resultados ou problema.");
         }
     }
-*/
+
     public static void testeInserir() throws RemoteException {
         //CNPJ validos: 68.355.404/0001-31; 51.728.712/0001-62
         //CPF: 514.928.977-95; 431.316.038-87
@@ -117,9 +117,8 @@ public class TesteRegistro {
         param[19] = "433.316.038-87";
         param[20] = "nome rep";
         param[21] = "(11)99999-8888";
-        System.out.println(mR.inserir(param, "adm", "123"));
+        System.out.println(mR.inserir(param));
     }
-    /*
     
     public static void testeAlterar() throws RemoteException {
         //CNPJ validos: 68.355.404/0001-31; 51.728.712/0001-62
