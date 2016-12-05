@@ -11,7 +11,7 @@ public class ServerRegistro {
         try {
             MensageiroRegistro menReg = new MensageiroImpl();
             //Registro de MensageiroRegistro
-            LocateRegistry.getRegistry(14003);
+            LocateRegistry.createRegistry(14003);
             Naming.rebind("rmi://localhost:14003/MensageiroRegistro", menReg);
         } catch (Exception ex) {
             System.out.println("Erro: " + ex);
