@@ -310,12 +310,12 @@ public class MensageiroImpl extends UnicastRemoteObject
     private boolean verificarUsuario(String usuario, String senha) {
         try {
             //MensageiroVerifica
-            //LocateRegistry.getRegistry("127.0.0.1");
-            LocateRegistry.getRegistry("192.168.0.103");
+            LocateRegistry.getRegistry("127.0.0.1");
+            //LocateRegistry.getRegistry("192.168.0.103");
             MensageiroVerifica menV = (MensageiroVerifica) Naming.lookup("rmi://localhost:14002/MensageiroVerifica");
             //MensageiroVerifica
-            //LocateRegistry.getRegistry("127.0.0.1");
-            LocateRegistry.getRegistry("192.168.0.103");
+            LocateRegistry.getRegistry("127.0.0.1");
+            //LocateRegistry.getRegistry("192.168.0.103");
             MensageiroAcesso menA = (MensageiroAcesso) Naming.lookup("rmi://localhost:14001/MensageiroAcesso");
 
             menA.entrar(usuario, senha);
